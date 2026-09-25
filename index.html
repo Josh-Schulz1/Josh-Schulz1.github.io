@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Joshua Schulz - personal portfolio of cognitive science, data analysis, and machine learning projects.">
+<title>Joshua Schulz Portfolio</title>
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+:root{
+  --bg:#F4F2EE; --surface:#FFFFFF; --surface-2:#F7F7F6; --ink:#1D2226; --ink-2:#4A4F55; --ink-3:#6B7075;
+  --line:#E0DFDC; --accent:#0A66C2; --accent-soft:#EAF3FC; --accent-ink:#0A4F96;
+  --ok:#1D6F42; --ok-soft:#E3F2E8; --warn:#8A5300; --warn-soft:#FCF0DC; --bad:#B0312B; --bad-soft:#FBE7E5;
+  --display:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --body:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --code:ui-monospace, Menlo, Consolas, monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;padding-inline:20px;padding-block:28px 56px}
+.wrap{max-width:1180px;margin-inline:auto;display:flex;flex-direction:column;gap:24px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.top nav{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--body);padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.btn.primary:hover{color:var(--surface);filter:brightness(1.08)}
+
+/* layout */
+.grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+
+/* profile */
+.profile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:20px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px)}
+@media (max-width:880px){.profile{position:static}}
+.idcard{display:flex;align-items:center;gap:16px}
+.photo{width:96px;height:96px;flex:none;border-radius:50%;overflow:hidden;border:3px solid var(--surface);box-shadow:0 0 0 1px var(--line);background:var(--surface-2)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.who h1{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.1;letter-spacing:-.015em;margin:0 0 6px;text-wrap:balance}
+.who p{margin:0;color:var(--ink-2);font-size:14px}
+.bio{margin:0;color:var(--ink-2)}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px}
+.contact{display:flex;flex-direction:column;gap:8px;font-size:14px}
+.contact .row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:var(--surface-2);border-radius:8px}
+.contact .row span{overflow-wrap:anywhere;user-select:all}
+.contact button{font:500 12px/1 var(--body);background:none;border:0;color:var(--accent);cursor:pointer;padding:4px}
+.contact a{text-decoration:none;font-weight:500}
+.skills{display:flex;flex-wrap:wrap;gap:6px}
+.skill{font-family:var(--mono);font-size:12px;padding:4px 8px;border-radius:6px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+
+/* main */
+.main{display:flex;flex-direction:column;gap:20px;min-width:0}
+.hero{display:flex;flex-direction:column;gap:6px}
+.hero h2{font-family:var(--display);font-weight:700;font-size:clamp(26px,3.4vw,38px);line-height:1.08;letter-spacing:-.02em;margin:0;text-wrap:balance;max-width:24ch}
+.hero p{margin:0;color:var(--ink-2);max-width:62ch}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:620px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--display);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{font-size:12.5px;color:var(--ink-3)}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font:500 13px/1 var(--body);padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip:hover:not([aria-pressed="true"]){border-color:var(--accent);color:var(--accent)}
+
+.projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:720px){.projects{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:border-color .15s, transform .15s}
+.card:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.card.wide{grid-column:1/-1}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.kind{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.card h3{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.2;letter-spacing:-.01em;margin:4px 0 0;text-wrap:balance}
+.status{flex:none;font:600 11.5px/1 var(--body);padding:6px 9px;border-radius:999px;white-space:nowrap}
+.status.done{background:var(--ok-soft);color:var(--ok)}
+.status.proto{background:var(--warn-soft);color:var(--warn)}
+.status.retired{background:var(--bad-soft);color:var(--bad)}
+.card p{margin:0;color:var(--ink-2);font-size:14.5px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:11.5px;padding:3px 7px;border-radius:5px;background:var(--accent-soft);color:var(--accent-ink)}
+.finding{font-size:13.5px;color:var(--ink);background:var(--surface-2);border-radius:8px;padding:10px 12px}
+.finding b{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:2px;font-weight:500}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.links .btn{padding:8px 12px}
+.links .btn[aria-disabled="true"]{opacity:.55;pointer-events:none}
+.lessons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:720px){.lessons{grid-template-columns:1fr}}
+.lessons div{background:var(--surface-2);border-radius:8px;padding:10px 12px;font-size:13.5px;color:var(--ink-2)}
+.lessons div b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+.empty{color:var(--ink-3);font-size:14px}
+
+.bstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:620px){.bstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.bstats div{background:var(--surface-2);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column}
+.bstats b{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums;line-height:1.15}
+.bstats span{font-size:12px;color:var(--ink-3)}
+.sublabel{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px}
+.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;color:var(--ink-2);font-size:14px}
+.steps b{color:var(--ink)}
+.steps code,.card code{font-family:var(--mono);font-size:12.5px;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+.two-col{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+@media (min-width:1500px){.two-col{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+.tbl table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--surface-2)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .n{text-align:right}
+.tbl tr.best td{font-weight:600;color:var(--ink)}
+.tnote{font-size:12.5px!important;color:var(--ink-3)!important;margin-top:6px!important}
+.calib-fig{margin:0;display:flex;flex-direction:column;gap:6px}
+.calib{width:100%;max-width:460px;height:auto}
+.calib .g{stroke:var(--line);stroke-width:1}
+.calib .d{stroke:var(--ink-3);stroke-width:1.5;stroke-dasharray:4 4}
+.calib .l{fill:none;stroke:var(--bad);stroke-width:2}
+.calib .c{fill:var(--bad);stroke:var(--surface);stroke-width:2}
+.calib .t{fill:var(--ink-3);font:11px var(--body)}
+.calib-fig figcaption{font-size:12.5px;color:var(--ink-3)}
+.card p.note{font-size:12.5px;color:var(--ink-3)}
+footer{color:var(--ink-3);font-size:12.5px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---- clean professional theme ---- */
+body{font-size:14.5px;padding-block:0 56px}
+.wrap{gap:16px}
+.top{background:var(--surface);border-bottom:1px solid var(--line);margin-inline:-20px;padding:10px max(20px,calc((100% + 40px - 1180px)/2));position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.mark{width:36px;height:36px;border-radius:6px;background:var(--accent);color:#fff;display:grid;place-items:center;font:700 15px/1 var(--body);letter-spacing:.02em}
+.brand-text{display:flex;flex-direction:column;line-height:1.2}
+.brand-text b{font-size:15px;color:var(--ink)}
+.brand-text span{font-size:12.5px;color:var(--ink-3)}
+.btn{border-radius:999px;font-weight:600;padding:8px 16px;border-color:var(--ink-3);color:var(--ink-2)}
+.btn:hover{background:var(--surface-2);border-color:var(--ink);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff;filter:none}
+.links .btn{border-color:var(--accent);color:var(--accent)}
+.links .btn:hover{background:var(--accent-soft);color:var(--accent-ink)}
+.grid{margin-top:8px}
+.profile,.card,.stat{border-radius:8px;border-color:var(--line);box-shadow:0 0 0 0 transparent}
+.profile{top:calc(env(safe-area-inset-top,0px) + 76px)}
+.photo{width:104px;height:104px;border:3px solid #fff;box-shadow:0 0 0 1px var(--line)}
+.who h1{font-size:22px;font-weight:600;letter-spacing:0}
+.label,.kind,.sublabel,.tbl th,.finding b{font-family:var(--body);text-transform:none;letter-spacing:0;font-weight:600;color:var(--ink-2)}
+.label{font-size:15px;color:var(--ink)}
+.kind{font-size:12.5px;font-weight:500;color:var(--ink-3)}
+.sublabel{font-size:13.5px;color:var(--ink)}
+.tbl th{font-size:12px}
+.finding b{font-size:12.5px;color:var(--ink)}
+.card h3{font-size:18px;font-weight:600;letter-spacing:0}
+.card:hover{border-color:var(--line);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.stat b,.bstats b{font-weight:600;letter-spacing:0}
+.stat b{font-size:24px}
+.skill{font-family:var(--body);font-size:12.5px;border-radius:999px;background:var(--surface);border-color:var(--ink-3);color:var(--ink-2)}
+.tag{font-family:var(--body);font-size:12px;border-radius:4px}
+.chip{border-color:var(--ink-3);font-weight:600}
+.chip[aria-pressed="true"]{background:#01754F;border-color:#01754F;color:#fff}
+.steps code,.card code{font-family:var(--code)}
+.contact .row{border-radius:6px}
+footer{border-top-color:var(--line)}
+
+.plan-overlay[hidden]{display:none!important}
+.plan-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:flex;justify-content:center;align-items:flex-start;padding:calc(env(safe-area-inset-top,0px) + 24px) 16px 24px;overflow-y:auto}
+.plan-panel{background:var(--surface);border-radius:10px;max-width:820px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.plan-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:20px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);border-radius:10px 10px 0 0}
+.plan-head h2{margin:4px 0 0;font-size:21px;font-weight:600}
+.plan-body{padding:8px 24px 28px;color:var(--ink-2);font-size:14.5px;line-height:1.6}
+.plan-body h3{color:var(--ink);font-size:17px;font-weight:600;margin:24px 0 8px}
+.plan-body h4{color:var(--ink);font-size:14.5px;font-weight:600;margin:14px 0 6px}
+.plan-body p{margin:0 0 10px;max-width:70ch}
+.plan-body ul,.plan-body ol{margin:0 0 10px;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.plan-body ol{margin-top:6px}
+.plan-body b{color:var(--ink)}
+.plan-body code{font-family:var(--code);font-size:12.5px}
+.plan-status{background:var(--warn-soft);color:var(--ink);border-radius:8px;padding:12px 14px;margin:14px 0 8px}
+.plan-small{font-size:13px;color:var(--ink-3)}
+.plan-body .tbl{margin-bottom:10px}
+.plan-body .tbl td.w{white-space:normal;min-width:160px}
+.plan-body .tbl td{vertical-align:top}
+.codefile{border:1px solid var(--line);border-radius:8px;margin-bottom:10px}
+.codefile summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--ink)}
+.codefile summary span{font-family:var(--code);font-weight:400;font-size:12.5px;color:var(--ink-3);margin-left:6px}
+.codefile pre{margin:0;padding:12px 14px;overflow-x:auto;background:var(--surface-2);border-top:1px solid var(--line);font-size:12px;line-height:1.5;max-height:520px;overflow-y:auto}
+button.btn{font-family:var(--body)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">JS</span>
+      <div class="brand-text"><b>Joshua Schulz</b><span>Personal Portfolio</span></div>
+    </div>
+    <nav aria-label="Profile links">
+      <a class="btn" href="http://www.linkedin.com/in/joshschulz1" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn primary" href="#projects">View projects</a>
+    </nav>
+  </header>
+
+  <div class="grid">
+    <aside class="profile" aria-label="About Joshua">
+      <div class="idcard">
+        <div class="photo"><img src="data:image/jpeg;base64,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" alt="Joshua Schulz headshot" width="96" height="96"></div>
+        <div class="who">
+          <h1>Joshua Schulz</h1>
+          <p>B.S. Cognitive Sciences · UC Irvine</p>
+        </div>
+      </div>
+      <div>
+        <p class="label">Bio</p>
+        <p class="bio">UC Irvine alum with a B.S. in Cognitive Science, experienced in improving operations in healthcare, collaborating across diverse teams, and building AI-powered projects. My work sits where how people think meets how data behaves: cognitive modeling, EEG analysis, and applied machine learning.</p>
+      </div>
+      <div>
+        <p class="label">Contact</p>
+        <div class="contact">
+          <div class="row"><span id="email">josh.schulzy@gmail.com</span><button type="button" id="copy">Copy</button></div>
+          <div class="row"><a href="http://www.linkedin.com/in/joshschulz1" target="_blank" rel="noopener">linkedin.com/in/joshschulz1</a><span aria-hidden="true">↗</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="label">Toolkit</p>
+        <div class="skills">
+          <span class="skill">Python</span><span class="skill">Pandas</span><span class="skill">MNE-Python</span><span class="skill">R</span><span class="skill">JavaScript</span><span class="skill">JASP</span><span class="skill">Signal Detection Theory</span><span class="skill">Bayesian modeling</span><span class="skill">LLM integration</span><span class="skill">UX research</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main" id="projects">
+      <section class="hero">
+        <p class="label">Class projects &amp; prototypes</p>
+        <p>Research analyses, simulations, and product prototypes from my coursework and side projects. Each card links to the code or the write-up.</p>
+      </section>
+
+      <section class="stats" aria-label="Summary">
+        <div class="stat"><b>6</b><span>Projects</span></div>
+        <div class="stat"><b>83</b><span>Participants analyzed</span></div>
+        <div class="stat"><b>3</b><span>Research studies</span></div>
+        <div class="stat"><b>2</b><span>Prototypes</span></div>
+      </section>
+
+      <div class="filters" role="group" aria-label="Filter projects">
+        <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-f="research" aria-pressed="false">Research</button>
+        <button class="chip" type="button" data-f="build" aria-pressed="false">Builds &amp; prototypes</button>
+        <button class="chip" type="button" data-f="python" aria-pressed="false">Python</button>
+      </div>
+
+      <section class="projects" id="grid">
+
+        <article class="card" data-cat="research python">
+          <div class="card-head">
+            <div><div class="kind">Simulation · Cognitive modeling</div><h3>Simulate-and-Recover</h3></div>
+            <span class="status done">Completed</span>
+          </div>
+          <p>A Python simulation that tests the EZ Diffusion Model by generating synthetic data, recovering the model's parameters, and measuring estimation accuracy with bias and squared error.</p>
+          <div class="finding"><b>Result</b>Parameter recovery was reliable, and accuracy improved as sample size increased.</div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">EZ Diffusion</span><span class="tag">Parameter recovery</span></div>
+          <div class="links"><a class="btn" href="https://github.com/JoshSchulz1/Simulate-and-Recover" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </article>
+
+        <article class="card" data-cat="build">
+          <div class="card-head">
+            <div><div class="kind">App prototype · AI</div><h3>Memory Journal</h3></div>
+            <span class="status proto">Prototype</span>
+          </div>
+          <p>A journal app for desktop and mobile with pages you flip through by hand. Tap a page to leave a voice memo, keep it as audio or transcribe it to text, then add photos or have the built-in LLM generate an image from the memory.</p>
+          <div class="finding"><b>Features</b>Page-flip UI · voice memos · transcription · AI-generated memory images</div>
+          <div class="tags"><span class="tag">JavaScript</span><span class="tag">LLM</span><span class="tag">Speech-to-text</span></div>
+          <div class="links"><a class="btn" href="https://github.com/Josh-Schulz1/Journal-Prototype" target="_blank" rel="noopener">GitHub ↗</a></div>
+        </article>
+
+        <article class="card" data-cat="research python">
+          <div class="card-head">
+            <div><div class="kind">Behavioral study · n = 83</div><h3>Emotion Recognition &amp; Cognitive Modeling</h3></div>
+            <span class="status done">Completed</span>
+          </div>
+          <p>How do people identify angry faces alone versus in a crowd? I cleaned and preprocessed the experimental data in Python (Pandas), then used JASP for Signal Detection Theory and Hierarchical Bayesian Modeling to measure sensitivity (d′), response bias, and individual differences.</p>
+          <div class="finding"><b>Result</b>Participants detected anger more accurately in crowds, while showing a stronger negative-emotion bias.</div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">JASP</span><span class="tag">SDT</span><span class="tag">Hierarchical Bayes</span></div>
+          <div class="links"><a class="btn" href="https://drive.google.com/file/d/1OUpk8QWJ19Jvz_ghoj1QJygkb1toi5li/view?usp=sharing" target="_blank" rel="noopener">Read report ↗</a></div>
+        </article>
+
+        <article class="card" data-cat="research python">
+          <div class="card-head">
+            <div><div class="kind">EEG · Group project</div><h3>EEG Sleep Analysis Across Age Groups</h3></div>
+            <span class="status done">Completed</span>
+          </div>
+          <p>Age-related changes in sleep using polysomnography recordings from the Sleep-EDF Database. We processed EEG in MNE-Python, visualized sleep stages, and compared frequency patterns with power spectral density (PSD) analysis.</p>
+          <div class="finding"><b>Result</b>Younger participants generally had longer, more pronounced REM sleep than older adults.</div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">MNE-Python</span><span class="tag">PSD</span><span class="tag">Sleep-EDF</span></div>
+          <div class="links">
+            <a class="btn" href="https://drive.google.com/file/d/10gmUzvAx9CjP4ifBjoqKYrs6byqJAz5N/view?usp=sharing" target="_blank" rel="noopener">Read report ↗</a>
+            <a class="btn" href="https://colab.research.google.com/drive/16FDwIdi-KWoQoc5aSx3ySarPgaq7Ecze?usp=sharing" target="_blank" rel="noopener">Colab notebook ↗</a>
+          </div>
+        </article>
+
+        <article class="card wide" data-cat="research python">
+          <div class="card-head">
+            <div><div class="kind">UX research · Proposed study</div><h3>Sleeper New-User Usability Study</h3></div>
+            <span class="status proto">Proposed</span>
+          </div>
+          <p>A full plan for a usability study on how easily new users can complete everyday tasks in the Sleeper fantasy app. It's designed for about 180 participants, which I can't recruit on my own right now, so there are no results yet. The plan and code are ready to run if I get access to a larger group.</p>
+          <div class="lessons">
+            <div><b>Research question</b>How easily can new users understand and complete common fantasy-sports tasks in a mobile fantasy app?</div>
+            <div><b>Method</b>Unmoderated usability test with 5 tasks, ease and confidence ratings, and the System Usability Scale.</div>
+            <div><b>What's included</b>Survey, data collection plan, and Python and R code for cleaning, stats, and graphs.</div>
+          </div>
+          <div class="tags"><span class="tag">UX research</span><span class="tag">Survey design</span><span class="tag">Python</span><span class="tag">R / ggplot2</span></div>
+          <div class="links"><button type="button" class="btn" id="plan-open">Read the study plan</button></div>
+          <p class="note">Independent portfolio project. Not affiliated with Sleeper.</p>
+        </article>
+
+        <article class="card wide" data-cat="build python">
+          <div class="card-head">
+            <div><div class="kind">Machine learning · NFL · Backtest</div><h3>NFL Betting Prediction Model</h3></div>
+            <span class="status retired">Didn't beat the market</span>
+          </div>
+          <p>I built an end-to-end pipeline that predicts NFL game winners from 19 seasons of data (2006&ndash;2024) and tests whether betting on its picks would have made money. It didn't. The sportsbook's own odds predicted games better than my models, and the bets the model chose lost the whole bankroll in the backtest. I'm including it because figuring out why it failed taught me as much as the projects that worked.</p>
+
+          <div class="bstats">
+            <div><b>4,997</b><span>Games modeled</span></div>
+            <div><b>55</b><span>Features per game</span></div>
+            <div><b>906,567</b><span>Play-by-play rows</span></div>
+            <div><b>3,611</b><span>Backtest bets</span></div>
+          </div>
+
+          <div>
+            <p class="sublabel">How it works</p>
+            <ol class="steps">
+              <li><b>Collect.</b> Pulled schedules, closing odds, and play-by-play data with <code>nfl_data_py</code>, then rolled the plays up into 10,292 team-game rows.</li>
+              <li><b>Clean.</b> Dropped 136 games missing stats or odds, leaving 4,997.</li>
+              <li><b>Build features.</b> Rolling 3- and 5-game team stats (like offensive EPA per play), Elo ratings, and rest and travel, using only information available before kickoff.</li>
+              <li><b>Train.</b> Logistic regression and random forest, trained on 2006&ndash;2022 and tested on 2023&ndash;2024.</li>
+              <li><b>Backtest.</b> Walk-forward test from 2009 to 2024. The model retrains each season, and it bets when its expected value beats the odds by at least 2%. I tested flat and Kelly bet sizing.</li>
+            </ol>
+          </div>
+
+          <div class="two-col">
+            <div>
+              <p class="sublabel">Model vs. the market (2023&ndash;2024 test set, 570 games)</p>
+              <div class="tbl"><table>
+                <thead><tr><th>Model</th><th class="n">Accuracy</th><th class="n">Log loss</th><th class="n">Brier</th><th class="n">ROC AUC</th></tr></thead>
+                <tbody>
+                  <tr class="best"><td>Market odds (vig removed)</td><td class="n">68.9%</td><td class="n">0.608</td><td class="n">0.210</td><td class="n">0.726</td></tr>
+                  <tr><td>Random forest</td><td class="n">63.5%</td><td class="n">0.636</td><td class="n">0.223</td><td class="n">0.686</td></tr>
+                  <tr><td>Logistic regression</td><td class="n">62.8%</td><td class="n">0.639</td><td class="n">0.224</td><td class="n">0.679</td></tr>
+                </tbody></table></div>
+              <p class="tnote">Lower log loss and Brier score are better. The market's odds won on every measure.</p>
+
+              <p class="sublabel" style="margin-top:14px">Backtest results (2009&ndash;2024, $1,000 start)</p>
+              <div class="tbl"><table>
+                <thead><tr><th>Bet sizing</th><th class="n">Bets</th><th class="n">Win rate</th><th class="n">ROI</th><th class="n">Final bankroll</th></tr></thead>
+                <tbody>
+                  <tr><td>Flat</td><td class="n">3,611</td><td class="n">42.1%</td><td class="n">&minus;3.2%</td><td class="n">$0</td></tr>
+                  <tr><td>Kelly</td><td class="n">3,611</td><td class="n">42.1%</td><td class="n">&minus;7.7%</td><td class="n">$0</td></tr>
+                </tbody></table></div>
+              <p class="tnote">Both strategies hit a 100% drawdown. Backtest used logistic regression and closing lines, with no fees or bet limits.</p>
+            </div>
+            <figure class="calib-fig">
+              <p class="sublabel">Why it lost: the model was overconfident on its bets</p>
+              <svg class="calib" viewBox="0 0 320 236" role="img" aria-label="Calibration of placed bets: at every level the actual win rate was below the model's predicted probability, by about 5 to 13 points.">
+<line x1="44" x2="304" y1="196.0" y2="196.0" class="g"/><text x="38" y="199.0" text-anchor="end" class="t">0%</text>
+<text x="44.0" y="212" text-anchor="middle" class="t">0%</text>
+<line x1="44" x2="304" y1="151.0" y2="151.0" class="g"/><text x="38" y="154.0" text-anchor="end" class="t">25%</text>
+<text x="109.0" y="212" text-anchor="middle" class="t">25%</text>
+<line x1="44" x2="304" y1="106.0" y2="106.0" class="g"/><text x="38" y="109.0" text-anchor="end" class="t">50%</text>
+<text x="174.0" y="212" text-anchor="middle" class="t">50%</text>
+<line x1="44" x2="304" y1="61.0" y2="61.0" class="g"/><text x="38" y="64.0" text-anchor="end" class="t">75%</text>
+<text x="239.0" y="212" text-anchor="middle" class="t">75%</text>
+<line x1="44" x2="304" y1="16.0" y2="16.0" class="g"/><text x="38" y="19.0" text-anchor="end" class="t">100%</text>
+<text x="304.0" y="212" text-anchor="middle" class="t">100%</text>
+<line x1="44" y1="196" x2="304" y2="16" class="d"/>
+<text x="250" y="40" class="t" text-anchor="end">Perfect calibration</text>
+<polyline class="l" points="86.6,170.9 111.0,164.8 135.8,152.8 161.4,132.0 186.8,119.7 212.6,108.9 238.2,84.1 262.9,66.2 286.0,51.5"/>
+<circle cx="86.6" cy="170.9" r="4.5" class="c"><title>Predicted 16%, actual 14% (79 bets)</title></circle>
+<circle cx="111.0" cy="164.8" r="4.5" class="c"><title>Predicted 26%, actual 17% (300 bets)</title></circle>
+<circle cx="135.8" cy="152.8" r="4.5" class="c"><title>Predicted 35%, actual 24% (513 bets)</title></circle>
+<circle cx="161.4" cy="132.0" r="4.5" class="c"><title>Predicted 45%, actual 36% (698 bets)</title></circle>
+<circle cx="186.8" cy="119.7" r="4.5" class="c"><title>Predicted 55%, actual 42% (670 bets)</title></circle>
+<circle cx="212.6" cy="108.9" r="4.5" class="c"><title>Predicted 65%, actual 48% (556 bets)</title></circle>
+<circle cx="238.2" cy="84.1" r="4.5" class="c"><title>Predicted 75%, actual 62% (460 bets)</title></circle>
+<circle cx="262.9" cy="66.2" r="4.5" class="c"><title>Predicted 84%, actual 72% (262 bets)</title></circle>
+<circle cx="286.0" cy="51.5" r="4.5" class="c"><title>Predicted 93%, actual 80% (71 bets)</title></circle>
+<text x="174" y="230" text-anchor="middle" class="t">Model's predicted win probability</text>
+<text x="10" y="106" class="t" transform="rotate(-90 10 106)" text-anchor="middle">Actual win rate</text></svg>
+              <figcaption>Each dot is a group of placed bets. Every dot sits below the dashed line: when the model said 55%, those bets won 42% of the time.</figcaption>
+            </figure>
+          </div>
+
+          <div class="lessons">
+            <div><b>The market is a tough baseline</b>Closing odds already include almost everything public stats can tell you. Beating them takes information the market doesn't have.</div>
+            <div><b>Disagreeing with the market is a warning sign</b>The model bet on 84% of games, which means it disagreed with the odds almost every week. Those disagreements were mostly the model being wrong.</div>
+            <div><b>Accuracy isn't enough</b>A model can pick 63% of winners and still lose money. For betting, what matters is calibration: predicted chances have to match real outcomes.</div>
+          </div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">pandas</span><span class="tag">nfl_data_py</span><span class="tag">Backtesting</span><span class="tag">pytest</span></div>
+          <div class="links"><span class="btn" aria-disabled="true">GitHub link coming soon</span></div>
+        </article>
+
+      </section>
+      <p class="empty" id="empty" hidden>No projects match this filter.</p>
+    </main>
+  </div>
+
+  <footer>
+    <span>© 2026 Joshua Schulz</span>
+    <span>josh.schulzy@gmail.com</span>
+  </footer>
+</div>
+
+
+<div class="plan-overlay" id="plan" hidden>
+  <div class="plan-panel" role="dialog" aria-modal="true" aria-labelledby="plan-title">
+    <div class="plan-head">
+      <div><div class="kind">Proposed research project · Joshua Schulz · 2026</div><h2 id="plan-title">Sleeper New-User Usability Study</h2></div>
+      <button type="button" class="btn" id="plan-close">Close</button>
+    </div>
+    <div class="plan-body">
+<div class="plan-status"><b>Status: proposed study, no data collected.</b> This is the full plan for a large-sample usability study, along with the code I would use to collect, clean, analyze, and graph the data. There are no results in it. A study this size needs around 180 participants, which I can't recruit on my own right now, so I built the project to be ready to run if I get access to a larger group.</div>
+<p class="plan-small">This is an independent portfolio project. I am not affiliated with, sponsored by, or endorsed by Sleeper or any other company named here.</p>
+
+<h3>1. Research question</h3>
+<p><b>How easily can new users understand and complete common fantasy-sports tasks in a mobile fantasy app?</b></p>
+<p>I'm using Sleeper as the example app. It has grown quickly because of its social features, and a lot of its new users are either switching from ESPN or Yahoo or have never played fantasy before. If someone can't figure out how to set a lineup in their first week, there's a good chance they don't come back.</p>
+<h4>Sub-questions</h4>
+<ul><li>Which of five core tasks are the hardest for first-time users?</li><li>Does fantasy experience (new to fantasy, daily fantasy only, or season-long) change how well people do?</li><li>How usable do new users rate the app overall?</li></ul>
+<h4>Hypotheses</h4>
+<ul><li><b>H1:</b> Tasks that live deeper in the app (making a lineup change, finding recent stats) will have lower completion rates and longer times than tasks on the main screens.</li><li><b>H2:</b> People who are new to fantasy will complete fewer tasks than people who already play season-long fantasy on another app.</li><li><b>H3:</b> The average System Usability Scale (SUS) score will be at or above 68, which is the commonly used benchmark for average usability.</li></ul>
+
+<h3>2. Why this needs a large sample</h3>
+<p>A small test with about 5 people is good at finding the biggest problems in an app, but it can't tell you whether one group of users struggles more than another. To test H2, I need enough people in each experience group to compare them.</p>
+<p>I used a standard power calculation for comparing two completion rates. To reliably detect a difference of 50% vs. 75% between two groups (80% power, alpha = .05), I need about 58 people per group. Rounding up to 60 per group across three groups gives a target of <b>180 participants</b>. Recruiting 180 first-time users and paying for a remote testing platform is not something I can do by myself right now, which is why this is a plan and not a finished study.</p>
+
+<h3>3. Study design</h3>
+<ul><li><b>Type:</b> Unmoderated remote usability test. Participants complete tasks on their own phone while a testing platform (for example Maze or UserTesting) records their screen and timing.</li><li><b>Pilot first:</b> Before the full launch I would run 5 moderated sessions to make sure the task wording is clear and the timing works.</li><li><b>Setup:</b> Every participant joins the same test league so everyone sees the same roster and matchup.</li><li><b>Order:</b> Each person completes all 5 tasks in a random order, which keeps the order of the tasks from affecting the results.</li><li><b>Length:</b> About 20 minutes, including the surveys.</li></ul>
+<h4>Participants</h4>
+<div class="tbl"><table><thead><tr><th>Criteria</th><th>Details</th></tr></thead><tbody>
+<tr><td>Target sample</td><td class="w">180 participants: 60 new to fantasy, 60 daily fantasy only, 60 season-long players</td></tr>
+<tr><td>Must be</td><td class="w">18 or older, a smartphone user, and someone who has never used the Sleeper app</td></tr>
+<tr><td>Recruiting</td><td class="w">Testing platform panel, plus university and fantasy sports communities</td></tr>
+<tr><td>Compensation</td><td class="w">Standard platform payment for a 20-minute test</td></tr></tbody></table></div>
+
+<h3>4. Tasks</h3>
+<div class="tbl"><table><thead><tr><th>Task</th><th>What the participant reads</th><th>Counts as a success when</th></tr></thead><tbody>
+<tr><td>T1</td><td class="w">Find when [player name] plays his next game.</td><td class="w">They pick the correct opponent and kickoff time</td></tr>
+<tr><td>T2</td><td class="w">Find who your team is playing this week and the current score.</td><td class="w">They reach the weekly matchup screen</td></tr>
+<tr><td>T3</td><td class="w">Your running back is on a bye. Move a bench player into your starting lineup.</td><td class="w">The swap is saved in the lineup</td></tr>
+<tr><td>T4</td><td class="w">Find your league's scoring settings, then open the league chat.</td><td class="w">They reach both screens</td></tr>
+<tr><td>T5</td><td class="w">Find how [player name] did in his most recent game.</td><td class="w">They pick the correct stat line</td></tr></tbody></table></div>
+<p class="plan-small">[Player name] gets filled in with a well-known player at the time of testing. Tasks T1 and T5 end with a multiple-choice question so success can be checked automatically.</p>
+
+<h3>5. What I'm measuring</h3>
+<div class="tbl"><table><thead><tr><th>Measure</th><th>How it's collected</th><th>Scale</th></tr></thead><tbody>
+<tr><td>Task completion</td><td class="w">Success, fail, or gave up. Checked with the answer question or the screen recording.</td><td>% of participants</td></tr>
+<tr><td>Time on task</td><td class="w">Recorded by the platform. Tasks stop at 180 seconds and count as a fail.</td><td>Seconds</td></tr>
+<tr><td>Misclicks</td><td class="w">Taps on the wrong part of the screen, tracked by the platform.</td><td>Count</td></tr>
+<tr><td>Ease</td><td class="w">Single Ease Question (SEQ) after each task.</td><td>1 to 7</td></tr>
+<tr><td>Confidence</td><td class="w">How sure they are that they did the task right.</td><td>1 to 5</td></tr>
+<tr><td>Overall usability</td><td class="w">System Usability Scale (SUS), 10 questions after all tasks.</td><td>0 to 100</td></tr>
+<tr><td>Open feedback</td><td class="w">Three written questions after all tasks.</td><td>Text</td></tr>
+<tr><td>Usability issues</td><td class="w">Coded by me from the recordings and written answers.</td><td>Issue codes</td></tr></tbody></table></div>
+
+<h3>6. Survey questions</h3>
+<h4>Screener (before the test)</h4>
+<ul><li>What is your age? (must be 18 or older)</li><li>Have you ever used the Sleeper app? (must answer No)</li><li>Which best describes you? New to fantasy / Daily fantasy only / Play season-long fantasy on another app</li><li>What kind of phone do you use? iPhone / Android</li></ul>
+<h4>After each task</h4>
+<ul><li>Overall, how difficult or easy was this task? (1 = Very difficult, 7 = Very easy)</li><li>How confident are you that you completed this task correctly? (1 = Not at all, 5 = Completely)</li></ul>
+<h4>After all tasks</h4>
+<ul><li>How easy was the app to navigate? (1 = Very hard, 5 = Very easy)</li><li>Overall, how confident were you that you completed the tasks correctly? (1 to 5)</li><li>System Usability Scale, 10 statements rated 1 (Strongly disagree) to 5 (Strongly agree):
+<ol><li>I think that I would like to use this app frequently.</li><li>I found the app unnecessarily complex.</li><li>I thought the app was easy to use.</li><li>I think that I would need the support of a technical person to be able to use this app.</li><li>I found the various functions in this app were well integrated.</li><li>I thought there was too much inconsistency in this app.</li><li>I would imagine that most people would learn to use this app very quickly.</li><li>I found the app very cumbersome to use.</li><li>I felt very confident using the app.</li><li>I needed to learn a lot of things before I could get going with this app.</li></ol></li>
+<li>What, if anything, was confusing?</li><li>What did you like?</li><li>What would you change?</li></ul>
+
+<h3>7. Data collection</h3>
+<p>The testing platform exports one row per participant. My R script (<code>01_collect_and_clean.R</code>) screens out anyone who doesn't qualify, checks for bad values, flags suspiciously fast answers, and splits the export into three clean files.</p>
+<div class="tbl"><table><thead><tr><th>File</th><th>One row per</th><th>Columns</th></tr></thead><tbody>
+<tr><td>participants.csv</td><td>Participant</td><td class="w">pid, age, fantasy_experience, device, used_sleeper_before</td></tr>
+<tr><td>task_results.csv</td><td>Participant and task</td><td class="w">pid, task_id, outcome (success / fail / gave_up), time_s, misclicks, seq_ease_1to7, confidence_1to5, issue_code</td></tr>
+<tr><td>survey.csv</td><td>Participant</td><td class="w">pid, nav_ease_1to5, overall_confidence_1to5, sus_q1 to sus_q10, confusing, liked, change</td></tr></tbody></table></div>
+
+<h3>8. Analysis plan</h3>
+<p>I wrote the analysis in both Python and R so it can be run in either one. Both versions make the same tables and graphs.</p>
+<ul><li><b>Completion rate</b> for each task, with a 95% confidence interval (Wilson method, which works well for percentages).</li><li><b>Time on task</b> for successful attempts only. Task times are usually skewed by a few slow people, so I report the median and the geometric mean instead of the regular average.</li><li><b>Average ease, confidence, and misclicks</b> for each task.</li><li><b>SUS score</b> for each person (0 to 100), then the average and spread for the whole sample.</li><li><b>Group comparisons:</b> chi-square tests for completion by experience group (H2), and a Kruskal-Wallis test for SUS scores by group.</li><li><b>Usability issues:</b> I code the recordings and written answers into issue categories and count how many people hit each one.</li></ul>
+<h4>Planned graphs</h4>
+<div class="tbl"><table><thead><tr><th>Figure</th><th>What it shows</th><th>Answers</th></tr></thead><tbody>
+<tr><td>1. Task completion</td><td class="w">Completion rate per task with confidence intervals</td><td class="w">Which tasks are hardest</td></tr>
+<tr><td>2. Time on task</td><td class="w">Box plot of seconds per task, with each person as a dot</td><td class="w">Which tasks slow people down</td></tr>
+<tr><td>3. Ease and confidence</td><td class="w">Average SEQ and confidence per task, in two panels</td><td class="w">How hard tasks felt</td></tr>
+<tr><td>4. Usability issues</td><td class="w">Share of people who hit each issue</td><td class="w">What the main problems are</td></tr>
+<tr><td>5. Completion by group</td><td class="w">Completion per task for each experience group</td><td class="w">Whether experience matters (H2)</td></tr></tbody></table></div>
+<p class="plan-small">No graphs are shown here because no data has been collected yet. The code below makes all five as soon as the data files are filled in.</p>
+
+<h3>9. Competitor comparison</h3>
+<p>To put the results in context, I would compare Sleeper with ESPN Fantasy, Yahoo Fantasy, and NFL Fantasy on the features behind each task. I would check each app's current version by hand instead of relying only on help pages, and look for patterns instead of picking one app as the best.</p>
+<div class="tbl"><table><thead><tr><th>Feature</th><th>Sleeper</th><th>ESPN</th><th>Yahoo</th><th>NFL</th></tr></thead><tbody>
+<tr><td>Live scoring</td><td></td><td></td><td></td><td></td></tr><tr><td>Lineup management</td><td></td><td></td><td></td><td></td></tr><tr><td>Player news and stats</td><td></td><td></td><td></td><td></td></tr><tr><td>League chat</td><td></td><td></td><td></td><td></td></tr><tr><td>Direct or group messages</td><td></td><td></td><td></td><td></td></tr><tr><td>Steps to make a lineup change</td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+
+<h3>10. Turning results into recommendations</h3>
+<p>Each major problem I find would get a severity rating and a recommendation written in this format:</p>
+<div class="tbl"><table><thead><tr><th>Part</th><th>What goes in it</th></tr></thead><tbody>
+<tr><td>Finding</td><td class="w">The problem, in one sentence</td></tr><tr><td>Evidence</td><td class="w">The numbers behind it, like completion rate, time, and how many people hit it</td></tr><tr><td>Recommendation</td><td class="w">A specific change to the app</td></tr><tr><td>Expected impact</td><td class="w">What should improve, and a target to check in a follow-up test</td></tr></tbody></table></div>
+<p>Severity is based on how many people hit the problem and whether it stopped them from finishing the task. I would pick the top recommendation and make a design mockup of it to test in a follow-up study.</p>
+
+<h3>11. Limitations</h3>
+<ul><li>Unmoderated tests can't ask people follow-up questions in the moment, so some reasons behind mistakes may be missed.</li><li>A test league isn't the same as a real league with friends, so people may care less about the outcome.</li><li>Recruiting through panels and online communities won't perfectly match everyone who downloads the app.</li><li>Apps update often, so the tasks and the competitor comparison need to be checked right before testing.</li></ul>
+
+<h3>12. What I learned from planning this</h3>
+<p>Planning this study showed me how much the sample size depends on the question. Five people would be enough to find the biggest problems, but comparing experience groups takes a lot more. It also made me think about what counts as success before collecting any data, since "finished the task" and "finished it without help" can tell very different stories. Writing the cleaning and graphing code ahead of time means the analysis is decided before I see the results, which keeps me from picking the numbers that look best.</p>
+
+<h3>Code</h3>
+<p>Click a file to see the full code.</p>
+<details class="codefile"><summary>Python: analysis and graphs <span>python/analysis.py</span></summary><pre><code>&quot;&quot;&quot;
+Sleeper New-User Usability Study - analysis and graphs (Python)
+Joshua Schulz | Independent portfolio project, not affiliated with Sleeper.
+
+Reads the clean data files in ../data (see the data dictionary in the study plan)
+and writes summary tables to ../output and graphs to ../figures.
+
+Run:  pip install pandas numpy scipy matplotlib
+      python analysis.py
+&quot;&quot;&quot;
+from pathlib import Path
+import numpy as np
+import pandas as pd
+import matplotlib
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt
+from scipy import stats
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA, OUT, FIG = ROOT / &quot;data&quot;, ROOT / &quot;output&quot;, ROOT / &quot;figures&quot;
+OUT.mkdir(exist_ok=True)
+FIG.mkdir(exist_ok=True)
+
+TASKS = {
+    &quot;T1&quot;: &quot;Find a player&#x27;s upcoming game&quot;,
+    &quot;T2&quot;: &quot;Find your team&#x27;s matchup&quot;,
+    &quot;T3&quot;: &quot;Make a lineup change&quot;,
+    &quot;T4&quot;: &quot;Find league info and chat&quot;,
+    &quot;T5&quot;: &quot;Find a player&#x27;s recent performance&quot;,
+}
+GROUPS = [&quot;New to fantasy&quot;, &quot;Daily fantasy only&quot;, &quot;Season-long player&quot;]
+
+# ---------- 1. Load and check the data ----------
+people = pd.read_csv(DATA / &quot;participants.csv&quot;)
+tasks = pd.read_csv(DATA / &quot;task_results.csv&quot;)
+survey = pd.read_csv(DATA / &quot;survey.csv&quot;)
+
+assert tasks[&quot;outcome&quot;].isin([&quot;success&quot;, &quot;fail&quot;, &quot;gave_up&quot;]).all(), &quot;outcome must be success, fail, or gave_up&quot;
+assert tasks[&quot;seq_ease_1to7&quot;].between(1, 7).all(), &quot;SEQ must be 1-7&quot;
+assert tasks[&quot;confidence_1to5&quot;].between(1, 5).all(), &quot;confidence must be 1-5&quot;
+tasks[&quot;success&quot;] = (tasks[&quot;outcome&quot;] == &quot;success&quot;).astype(int)
+tasks = tasks.merge(people[[&quot;pid&quot;, &quot;fantasy_experience&quot;]], on=&quot;pid&quot;, how=&quot;left&quot;)
+N = tasks[&quot;pid&quot;].nunique()
+
+
+def wilson_ci(k, n, z=1.96):
+    &quot;&quot;&quot;95% Wilson score interval for a completion rate.&quot;&quot;&quot;
+    if n == 0:
+        return (np.nan, np.nan)
+    p = k / n
+    denom = 1 + z**2 / n
+    center = (p + z**2 / (2 * n)) / denom
+    half = z * np.sqrt(p * (1 - p) / n + z**2 / (4 * n**2)) / denom
+    return center - half, center + half
+
+
+# ---------- 2. Task summary table ----------
+rows = []
+for tid, g in tasks.groupby(&quot;task_id&quot;):
+    k, n = g[&quot;success&quot;].sum(), len(g)
+    lo, hi = wilson_ci(k, n)
+    ok = g[g[&quot;success&quot;] == 1]
+    rows.append({
+        &quot;task_id&quot;: tid,
+        &quot;task&quot;: TASKS.get(tid, tid),
+        &quot;n&quot;: n,
+        &quot;completion_rate&quot;: k / n,
+        &quot;ci_low&quot;: lo,
+        &quot;ci_high&quot;: hi,
+        # task times are skewed, so report the median and the geometric mean
+        &quot;median_time_s&quot;: ok[&quot;time_s&quot;].median(),
+        &quot;geo_mean_time_s&quot;: np.exp(np.log(ok[&quot;time_s&quot;]).mean()) if len(ok) else np.nan,
+        &quot;mean_misclicks&quot;: g[&quot;misclicks&quot;].mean(),
+        &quot;mean_seq&quot;: g[&quot;seq_ease_1to7&quot;].mean(),
+        &quot;mean_confidence&quot;: g[&quot;confidence_1to5&quot;].mean(),
+    })
+summary = pd.DataFrame(rows).sort_values(&quot;task_id&quot;)
+summary.round(3).to_csv(OUT / &quot;summary_by_task.csv&quot;, index=False)
+
+# ---------- 3. SUS score (0-100) ----------
+sus_items = survey[[f&quot;sus_q{i}&quot; for i in range(1, 11)]].to_numpy()
+odd = sus_items[:, 0::2] - 1        # positive items: score - 1
+even = 5 - sus_items[:, 1::2]       # negative items: 5 - score
+survey[&quot;sus_score&quot;] = (odd.sum(axis=1) + even.sum(axis=1)) * 2.5
+survey = survey.merge(people[[&quot;pid&quot;, &quot;fantasy_experience&quot;]], on=&quot;pid&quot;, how=&quot;left&quot;)
+survey[[&quot;pid&quot;, &quot;fantasy_experience&quot;, &quot;sus_score&quot;]].to_csv(OUT / &quot;sus_scores.csv&quot;, index=False)
+
+# ---------- 4. Issues (coded from open-ended answers and screen recordings) ----------
+issues = (tasks.dropna(subset=[&quot;issue_code&quot;])
+          .groupby([&quot;issue_code&quot;, &quot;task_id&quot;])[&quot;pid&quot;].nunique()
+          .reset_index(name=&quot;participants&quot;)
+          .sort_values(&quot;participants&quot;, ascending=False))
+issues[&quot;share&quot;] = issues[&quot;participants&quot;] / N
+issues.to_csv(OUT / &quot;issue_frequency.csv&quot;, index=False)
+
+# ---------- 5. Statistical tests ----------
+lines = []
+for tid, g in tasks.groupby(&quot;task_id&quot;):
+    table = pd.crosstab(g[&quot;fantasy_experience&quot;], g[&quot;success&quot;])
+    if table.shape == (3, 2):
+        chi2, p, dof, _ = stats.chi2_contingency(table)
+        lines.append(f&quot;{tid} completion by experience group: chi2({dof}) = {chi2:.2f}, p = {p:.4f}&quot;)
+sus_groups = [survey.loc[survey[&quot;fantasy_experience&quot;] == grp, &quot;sus_score&quot;] for grp in GROUPS]
+h, p = stats.kruskal(*sus_groups)
+lines.append(f&quot;SUS by experience group (Kruskal-Wallis): H = {h:.2f}, p = {p:.4f}&quot;)
+lines.append(f&quot;SUS overall: mean = {survey[&#x27;sus_score&#x27;].mean():.1f}, SD = {survey[&#x27;sus_score&#x27;].std():.1f}&quot;)
+(OUT / &quot;stats_tests.txt&quot;).write_text(&quot;\n&quot;.join(lines))
+print(&quot;\n&quot;.join(lines))
+
+# ---------- 6. Graphs ----------
+INK, INK2, GRID = &quot;#1a1d27&quot;, &quot;#5a6072&quot;, &quot;#e3e5ec&quot;
+BLUE, ORANGE, GREEN = &quot;#2a78d6&quot;, &quot;#eb6834&quot;, &quot;#1baf7a&quot;
+plt.rcParams.update({
+    &quot;font.size&quot;: 10.5, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+    &quot;axes.edgecolor&quot;: GRID, &quot;xtick.color&quot;: INK2, &quot;ytick.color&quot;: INK2,
+    &quot;savefig.dpi&quot;: 200, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+})
+labels = [f&quot;{r.task_id}  {r.task}&quot; for r in summary.itertuples()]
+y = np.arange(len(summary))[::-1]
+
+# Figure 1: completion rate with 95% confidence intervals
+fig, ax = plt.subplots(figsize=(8, 3.6))
+rate = summary[&quot;completion_rate&quot;] * 100
+ax.barh(y, rate, color=BLUE, height=0.55)
+ax.errorbar(rate, y, xerr=[rate - summary[&quot;ci_low&quot;] * 100, summary[&quot;ci_high&quot;] * 100 - rate],
+            fmt=&quot;none&quot;, ecolor=INK, capsize=3, lw=1.2)
+for yi, v in zip(y, rate):
+    ax.text(v + 2, yi + 0.3, f&quot;{v:.0f}%&quot;, fontsize=9, color=INK)
+ax.set_yticks(y, labels)
+ax.set_xlim(0, 105)
+ax.set_xlabel(&quot;Completion rate (%) with 95% confidence interval&quot;)
+ax.set_title(f&quot;Task completion (n = {N})&quot;, loc=&quot;left&quot;, fontweight=&quot;bold&quot;)
+ax.xaxis.grid(True, color=GRID)
+ax.set_axisbelow(True)
+fig.savefig(FIG / &quot;fig1_completion.png&quot;)
+plt.close(fig)
+
+# Figure 2: time on task (successful attempts), box plot with points
+fig, ax = plt.subplots(figsize=(8, 3.6))
+order = list(summary[&quot;task_id&quot;])
+data = [tasks.loc[(tasks[&quot;task_id&quot;] == t) &amp; (tasks[&quot;success&quot;] == 1), &quot;time_s&quot;] for t in order]
+ax.boxplot(data[::-1], vert=False, widths=0.5, showfliers=False,
+           medianprops={&quot;color&quot;: INK, &quot;lw&quot;: 2}, boxprops={&quot;color&quot;: INK2}, whiskerprops={&quot;color&quot;: INK2})
+for i, d in enumerate(data[::-1], start=1):
+    jitter = np.random.default_rng(1).uniform(-0.15, 0.15, len(d))
+    ax.scatter(d, i + jitter, s=10, color=BLUE, alpha=0.5)
+ax.set_yticks(range(1, len(order) + 1), labels[::-1])
+ax.set_xlabel(&quot;Seconds to complete (successful attempts only)&quot;)
+ax.set_title(&quot;Time on task&quot;, loc=&quot;left&quot;, fontweight=&quot;bold&quot;)
+ax.xaxis.grid(True, color=GRID)
+ax.set_axisbelow(True)
+fig.savefig(FIG / &quot;fig2_time_on_task.png&quot;)
+plt.close(fig)
+
+# Figure 3: ease (SEQ 1-7) and confidence (1-5) as two panels, since the scales differ
+fig, axs = plt.subplots(1, 2, figsize=(8, 3.4), sharey=True)
+for ax, col, top, title in [(axs[0], &quot;mean_seq&quot;, 7, &quot;Ease (SEQ, 1-7)&quot;),
+                            (axs[1], &quot;mean_confidence&quot;, 5, &quot;Confidence (1-5)&quot;)]:
+    ax.barh(y, summary[col], color=BLUE, height=0.55)
+    for yi, v in zip(y, summary[col]):
+        ax.text(v + 0.08, yi, f&quot;{v:.1f}&quot;, va=&quot;center&quot;, fontsize=9, color=INK)
+    ax.set_xlim(1, top + 0.8)
+    ax.set_title(title, loc=&quot;left&quot;, fontweight=&quot;bold&quot;)
+    ax.xaxis.grid(True, color=GRID)
+    ax.set_axisbelow(True)
+axs[0].set_yticks(y, summary[&quot;task_id&quot;])
+fig.savefig(FIG / &quot;fig3_ease_confidence.png&quot;)
+plt.close(fig)
+
+# Figure 4: most common usability issues
+top = issues.groupby(&quot;issue_code&quot;)[&quot;participants&quot;].sum().sort_values().tail(8)
+fig, ax = plt.subplots(figsize=(8, 3.4))
+ax.barh(top.index, top / N * 100, color=BLUE, height=0.55)
+ax.set_xlabel(&quot;Share of participants who hit the issue (%)&quot;)
+ax.set_title(&quot;Most common usability issues&quot;, loc=&quot;left&quot;, fontweight=&quot;bold&quot;)
+ax.xaxis.grid(True, color=GRID)
+ax.set_axisbelow(True)
+fig.savefig(FIG / &quot;fig4_issues.png&quot;)
+plt.close(fig)
+
+# Figure 5: completion by experience group (grouped bars)
+by_grp = tasks.groupby([&quot;task_id&quot;, &quot;fantasy_experience&quot;])[&quot;success&quot;].mean().unstack()[GROUPS] * 100
+fig, ax = plt.subplots(figsize=(8, 3.6))
+x = np.arange(len(by_grp))
+w = 0.26
+for i, (grp, color) in enumerate(zip(GROUPS, [ORANGE, GREEN, BLUE])):
+    ax.bar(x + (i - 1) * w, by_grp[grp], width=w - 0.02, color=color, label=grp)
+ax.set_xticks(x, by_grp.index)
+ax.set_ylim(0, 105)
+ax.set_ylabel(&quot;Completion rate (%)&quot;)
+ax.set_title(&quot;Completion by fantasy experience&quot;, loc=&quot;left&quot;, fontweight=&quot;bold&quot;)
+ax.legend(frameon=False, ncol=3, loc=&quot;upper center&quot;, bbox_to_anchor=(0.5, -0.12))
+ax.yaxis.grid(True, color=GRID)
+ax.set_axisbelow(True)
+fig.savefig(FIG / &quot;fig5_completion_by_group.png&quot;)
+plt.close(fig)
+
+print(&quot;Done. Tables are in /output and graphs are in /figures.&quot;)
+</code></pre></details>
+<details class="codefile"><summary>R: data collection and cleaning <span>r/01_collect_and_clean.R</span></summary><pre><code># Sleeper New-User Usability Study - data collection and cleaning (R)
+# Joshua Schulz | Independent portfolio project, not affiliated with Sleeper.
+#
+# The testing platform (or a Google Form) exports one row per participant.
+# This script checks that export and turns it into the three clean files the
+# analysis uses: participants.csv, task_results.csv, and survey.csv.
+#
+# Expected raw columns:
+#   pid, age, fantasy_experience, device, used_sleeper_before,
+#   T1_outcome, T1_time_s, T1_misclicks, T1_seq, T1_confidence, ... (same for T2-T5),
+#   nav_ease, overall_confidence, sus_q1 ... sus_q10, confusing, liked, change
+
+library(dplyr)
+library(tidyr)
+library(readr)
+
+raw &lt;- read_csv(&quot;data/raw_export.csv&quot;, show_col_types = FALSE)
+
+# ---- 1. Screen out people who do not qualify ----
+clean &lt;- raw %&gt;%
+  filter(age &gt;= 18, used_sleeper_before == &quot;No&quot;) %&gt;%
+  distinct(pid, .keep_all = TRUE)
+
+cat(&quot;Kept&quot;, nrow(clean), &quot;of&quot;, nrow(raw), &quot;participants after screening\n&quot;)
+
+# ---- 2. Participants file ----
+participants &lt;- clean %&gt;%
+  select(pid, age, fantasy_experience, device, used_sleeper_before)
+write_csv(participants, &quot;data/participants.csv&quot;)
+
+# ---- 3. Task results: wide to long (one row per participant per task) ----
+task_results &lt;- clean %&gt;%
+  select(pid, matches(&quot;^T[1-5]_&quot;)) %&gt;%
+  pivot_longer(
+    cols = -pid,
+    names_to = c(&quot;task_id&quot;, &quot;.value&quot;),
+    names_pattern = &quot;^(T[1-5])_(.*)$&quot;
+  ) %&gt;%
+  rename(seq_ease_1to7 = seq, confidence_1to5 = confidence) %&gt;%
+  mutate(
+    outcome = tolower(outcome),
+    # anything over the 180 second cap counts as a failure
+    outcome = if_else(time_s &gt; 180, &quot;fail&quot;, outcome),
+    issue_code = NA_character_   # filled in later while coding recordings
+  )
+
+# ---- 4. Quality checks ----
+stopifnot(all(task_results$outcome %in% c(&quot;success&quot;, &quot;fail&quot;, &quot;gave_up&quot;)))
+stopifnot(all(task_results$seq_ease_1to7 %in% 1:7))
+stopifnot(all(task_results$confidence_1to5 %in% 1:5))
+
+# flag very fast &quot;successes&quot; (under 3 seconds) for manual review
+too_fast &lt;- task_results %&gt;% filter(outcome == &quot;success&quot;, time_s &lt; 3)
+if (nrow(too_fast) &gt; 0) {
+  cat(&quot;Review these rows, they may be clicking through:\n&quot;)
+  print(too_fast)
+}
+write_csv(task_results, &quot;data/task_results.csv&quot;)
+
+# ---- 5. Survey file ----
+survey &lt;- clean %&gt;%
+  select(pid, nav_ease_1to5 = nav_ease, overall_confidence_1to5 = overall_confidence,
+         starts_with(&quot;sus_q&quot;), confusing, liked, change)
+stopifnot(all(as.matrix(select(survey, starts_with(&quot;sus_q&quot;))) %in% 1:5))
+write_csv(survey, &quot;data/survey.csv&quot;)
+
+cat(&quot;Clean files saved to /data\n&quot;)
+</code></pre></details>
+<details class="codefile"><summary>R: analysis and graphs (ggplot2) <span>r/02_analysis_and_graphs.R</span></summary><pre><code># Sleeper New-User Usability Study - analysis and graphs (R / ggplot2)
+# Joshua Schulz | Independent portfolio project, not affiliated with Sleeper.
+# Run 01_collect_and_clean.R first.
+
+library(dplyr)
+library(tidyr)
+library(readr)
+library(ggplot2)
+
+dir.create(&quot;figures&quot;, showWarnings = FALSE)
+dir.create(&quot;output&quot;, showWarnings = FALSE)
+
+task_names &lt;- c(
+  T1 = &quot;Find a player&#x27;s upcoming game&quot;,
+  T2 = &quot;Find your team&#x27;s matchup&quot;,
+  T3 = &quot;Make a lineup change&quot;,
+  T4 = &quot;Find league info and chat&quot;,
+  T5 = &quot;Find a player&#x27;s recent performance&quot;
+)
+groups &lt;- c(&quot;New to fantasy&quot;, &quot;Daily fantasy only&quot;, &quot;Season-long player&quot;)
+
+people &lt;- read_csv(&quot;data/participants.csv&quot;, show_col_types = FALSE)
+tasks  &lt;- read_csv(&quot;data/task_results.csv&quot;, show_col_types = FALSE) %&gt;%
+  mutate(success = as.integer(outcome == &quot;success&quot;)) %&gt;%
+  left_join(select(people, pid, fantasy_experience), by = &quot;pid&quot;) %&gt;%
+  mutate(task_label = paste(task_id, task_names[task_id]),
+         fantasy_experience = factor(fantasy_experience, levels = groups))
+survey &lt;- read_csv(&quot;data/survey.csv&quot;, show_col_types = FALSE)
+
+# ---- 1. Task summary with 95% Wilson confidence intervals ----
+wilson &lt;- function(k, n, z = 1.96) {
+  p &lt;- k / n
+  center &lt;- (p + z^2 / (2 * n)) / (1 + z^2 / n)
+  half &lt;- z * sqrt(p * (1 - p) / n + z^2 / (4 * n^2)) / (1 + z^2 / n)
+  c(center - half, center + half)
+}
+
+summary_by_task &lt;- tasks %&gt;%
+  group_by(task_id, task_label) %&gt;%
+  summarise(
+    n = n(),
+    completed = sum(success),
+    completion_rate = mean(success),
+    ci_low = wilson(completed, n)[1],
+    ci_high = wilson(completed, n)[2],
+    median_time_s = median(time_s[success == 1]),
+    geo_mean_time_s = exp(mean(log(time_s[success == 1]))),
+    mean_misclicks = mean(misclicks),
+    mean_seq = mean(seq_ease_1to7),
+    mean_confidence = mean(confidence_1to5),
+    .groups = &quot;drop&quot;
+  )
+write_csv(summary_by_task, &quot;output/summary_by_task_R.csv&quot;)
+
+# ---- 2. SUS score (0-100) ----
+sus &lt;- survey %&gt;%
+  select(pid, starts_with(&quot;sus_q&quot;)) %&gt;%
+  pivot_longer(-pid, names_to = &quot;item&quot;, values_to = &quot;score&quot;) %&gt;%
+  mutate(item = as.integer(sub(&quot;sus_q&quot;, &quot;&quot;, item)),
+         points = if_else(item %% 2 == 1, score - 1, 5 - score)) %&gt;%
+  group_by(pid) %&gt;%
+  summarise(sus_score = sum(points) * 2.5, .groups = &quot;drop&quot;) %&gt;%
+  left_join(select(people, pid, fantasy_experience), by = &quot;pid&quot;)
+write_csv(sus, &quot;output/sus_scores_R.csv&quot;)
+
+# ---- 3. Statistical tests ----
+sink(&quot;output/stats_tests_R.txt&quot;)
+for (t in names(task_names)) {
+  d &lt;- filter(tasks, task_id == t)
+  cat(&quot;\n&quot;, t, &quot;completion by experience group\n&quot;)
+  print(chisq.test(table(d$fantasy_experience, d$success)))
+}
+cat(&quot;\nSUS by experience group\n&quot;)
+print(kruskal.test(sus_score ~ fantasy_experience, data = sus))
+sink()
+
+# ---- 4. Graphs ----
+theme_study &lt;- theme_minimal(base_size = 11) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(face = &quot;bold&quot;),
+        plot.title.position = &quot;plot&quot;)
+blue &lt;- &quot;#2a78d6&quot;
+
+# Figure 1: completion rate with confidence intervals
+g1 &lt;- ggplot(summary_by_task, aes(x = completion_rate * 100, y = reorder(task_label, desc(task_id)))) +
+  geom_col(fill = blue, width = 0.55) +
+  geom_errorbar(aes(xmin = ci_low * 100, xmax = ci_high * 100), width = 0.2, orientation = &quot;y&quot;) +
+  scale_x_continuous(limits = c(0, 100)) +
+  labs(title = &quot;Task completion&quot;, x = &quot;Completion rate (%) with 95% CI&quot;, y = NULL) +
+  theme_study
+ggsave(&quot;figures/fig1_completion_R.png&quot;, g1, width = 8, height = 3.6, dpi = 200)
+
+# Figure 2: time on task, successful attempts only
+g2 &lt;- tasks %&gt;%
+  filter(success == 1) %&gt;%
+  ggplot(aes(x = time_s, y = reorder(task_label, desc(task_id)))) +
+  geom_boxplot(outlier.shape = NA, width = 0.5) +
+  geom_jitter(height = 0.15, alpha = 0.4, color = blue, size = 1) +
+  labs(title = &quot;Time on task&quot;, x = &quot;Seconds to complete (successful attempts only)&quot;, y = NULL) +
+  theme_study
+ggsave(&quot;figures/fig2_time_on_task_R.png&quot;, g2, width = 8, height = 3.6, dpi = 200)
+
+# Figure 3: ease and confidence side by side (different scales, so separate panels)
+g3 &lt;- summary_by_task %&gt;%
+  select(task_id, `Ease (SEQ, 1-7)` = mean_seq, `Confidence (1-5)` = mean_confidence) %&gt;%
+  pivot_longer(-task_id, names_to = &quot;measure&quot;, values_to = &quot;value&quot;) %&gt;%
+  ggplot(aes(x = value, y = reorder(task_id, desc(task_id)))) +
+  geom_col(fill = blue, width = 0.55) +
+  geom_text(aes(label = round(value, 1)), hjust = -0.2, size = 3.2) +
+  facet_wrap(~ measure, scales = &quot;free_x&quot;) +
+  labs(title = &quot;Perceived ease and confidence by task&quot;, x = &quot;Mean rating&quot;, y = NULL) +
+  theme_study
+ggsave(&quot;figures/fig3_ease_confidence_R.png&quot;, g3, width = 8, height = 3.4, dpi = 200)
+
+# Figure 4: most common usability issues
+n_people &lt;- n_distinct(tasks$pid)
+g4 &lt;- tasks %&gt;%
+  filter(!is.na(issue_code)) %&gt;%
+  distinct(pid, issue_code) %&gt;%
+  count(issue_code) %&gt;%
+  slice_max(n, n = 8) %&gt;%
+  ggplot(aes(x = n / n_people * 100, y = reorder(issue_code, n))) +
+  geom_col(fill = blue, width = 0.55) +
+  labs(title = &quot;Most common usability issues&quot;, x = &quot;Share of participants (%)&quot;, y = NULL) +
+  theme_study
+ggsave(&quot;figures/fig4_issues_R.png&quot;, g4, width = 8, height = 3.4, dpi = 200)
+
+# Figure 5: completion by experience group
+g5 &lt;- tasks %&gt;%
+  group_by(task_id, fantasy_experience) %&gt;%
+  summarise(rate = mean(success) * 100, .groups = &quot;drop&quot;) %&gt;%
+  ggplot(aes(x = task_id, y = rate, fill = fantasy_experience)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.75) +
+  scale_fill_manual(values = c(&quot;#eb6834&quot;, &quot;#1baf7a&quot;, blue)) +
+  scale_y_continuous(limits = c(0, 100)) +
+  labs(title = &quot;Completion by fantasy experience&quot;, x = NULL, y = &quot;Completion rate (%)&quot;, fill = NULL) +
+  theme_study +
+  theme(legend.position = &quot;bottom&quot;, panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line())
+ggsave(&quot;figures/fig5_completion_by_group_R.png&quot;, g5, width = 8, height = 3.6, dpi = 200)
+
+cat(&quot;Done. Tables are in /output and graphs are in /figures.\n&quot;)
+</code></pre></details>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  var cards=[].slice.call(document.querySelectorAll('#grid .card'));
+  function apply(f){
+    var n=0;
+    chips.forEach(function(c){c.setAttribute('aria-pressed',String(c.dataset.f===f))});
+    cards.forEach(function(c){var show=f==='all'||c.dataset.cat.split(' ').indexOf(f)>-1;c.hidden=!show;if(show)n++;});
+    document.getElementById('empty').hidden=n>0;
+    try{localStorage.setItem('pf-filter',f)}catch(e){}
+  }
+  chips.forEach(function(c){c.addEventListener('click',function(){apply(c.dataset.f)})});
+  var saved='all';try{saved=localStorage.getItem('pf-filter')||'all'}catch(e){}
+  apply(saved);
+
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var t=document.getElementById('email').textContent;
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('email'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected';}
+    try{navigator.clipboard.writeText(t).then(function(){btn.textContent='Copied'},sel)}catch(e){sel()}
+    setTimeout(function(){btn.textContent='Copy'},1800);
+  });
+
+  var ov=document.getElementById('plan');
+  function openPlan(){ov.hidden=false;document.body.style.overflow='hidden';document.getElementById('plan-close').focus();}
+  function closePlan(){ov.hidden=true;document.body.style.overflow='';document.getElementById('plan-open').focus();}
+  document.getElementById('plan-open').addEventListener('click',openPlan);
+  document.getElementById('plan-close').addEventListener('click',closePlan);
+  ov.addEventListener('click',function(e){if(e.target===ov)closePlan();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!ov.hidden)closePlan();});
+  if(location.hash==='#study-plan')openPlan();
+})();
+</script>
+</body>
+</html>
